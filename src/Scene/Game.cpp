@@ -1,16 +1,49 @@
-﻿#include "Game.hpp"
+#include "Game.hpp"
 #include "GameClear.hpp"
 #include "GameOver.hpp"
+#include "Stone.hpp"
+#include "Air.hpp"
+#include <iostream>
+
 
 using namespace std;
 
 Game::Game()
-	: player(RectF(500, 500, 50, 50), U"player", 5, 5)
+	: player(RectF(125, 400, 30, 30), U"player", 5, 5), rotatingBar(RectF(120, 320, 150,5), U"rotating_bar", 0.0, 1.5), fieldSize(Size(20, 15)), blockSize(40)
 {
-	for (int i = 0; i < 5; i++) {
-		Enemy tmp(RectF(100 + 100 * i, 100, 50, 50), U"enemy", 5, 50, Vec2(3, 3));
-		enemy.push_back(tmp);
-	}
+    const CSVData csv(U"test.csv");
+    
+    fieldBlocks = Grid<BlockBase>(fieldSize);
+    for(int i = 0; i < fieldSize.x; ++i)
+    {
+        for (int j = 0; j < fieldSize.y; ++j)
+        {
+            int bs = blockSize;
+            const RectF rect = RectF(bs * i, bs * j, bs, bs);
+            int32 blockID = csv.get<int32>(j, i);
+            if(blockID == 0)
+            {
+                fieldBlocks[j][i] = Air(rect, U"air");
+                cout << "air" << endl;
+            }
+            else if(blockID == 1)
+            {
+                fieldBlocks[j][i] = Stone(rect, U"stone");
+                cout << "stone" << endl;
+            }
+            else if(blockID == 3)
+            {
+                Goal goal = Goal(rect, U"goal");
+                fieldBlocks[j][i] = goal;
+                goalBlocks.push_back(goal);
+                cout << "goal" << endl;
+            } else {
+                cout << "nothing" << endl;
+                
+            }
+        }
+    }
+    
 }
 
 Game::~Game()
@@ -20,56 +53,40 @@ Game::~Game()
 
 void Game::Draw() const
 {
+    for (int x = 0; x < fieldSize.x; ++x)
+    {
+        for (int y = 0; y < fieldSize.y; ++y)
+        {
+            fieldBlocks[y][x].Draw();
+        }
+    }
+    
 	player.Draw();
-	for (const auto& s : pShot) {
-		s.Draw();
-	}
-	for (const auto& e : enemy) {
-		e.Draw();
-	}
-	for (const auto& s : eShot) {
-		s.Draw();
-	}
-
+    rotatingBar.Draw();
+    
 }
 
 
 void Game::Update()
 {
-	for (auto& s : pShot) {
-		s.Update();
-	}
-
-	player.Update();
-	if (KeySpace.pressed() && player.CanShot()) {
-		pShot.push_back(PlayerShot(RectF(player.GetPos(), 5, 30), U"playerShot", 1, 1, Vec2(0, -20)));
-		player.Shot();		//プレイヤーが弾出したことを通知
-	}
-
-	for (auto& s : eShot) {
-		s.Update();
-	}
-
-	for (auto& e : enemy) {
-		e.Update();
-		if (e.CanShot()) {
-			eShot.push_back(EnemyShot(RectF(e.GetPos(), 5, 30), U"enemyShot", 1, 1, Vec2(0, 20)));
-		}
-	}
-
-	player.Damage(eShot);				//ダメージ計算
-	for (size_t i = 0; i < enemy.size(); i++) {
-		enemy[i].Damage(pShot);			//ダメージ計算
-		if (!enemy[i].IsLiving()) {		//死亡
-			enemy.erase(enemy.begin() + i);
-			i--;
-		}
-	}
-
+    for (auto& block : fieldBlocks)
+    {
+        player.Damage(block);
+    }
+    player.Damage(rotatingBar);
+    
+    player.Update();
+    rotatingBar.Update();
+    
 	if (!player.IsLiving()) {		//プレイヤー死亡
-		nextScene = make_unique<GameOver>();
+        nextScene = std::make_unique<GameOver>();
 	}
-	if (enemy.empty()) {			//敵全滅
-		nextScene = make_unique<GameClear>();
-	}
+    
+    for(const auto& goal : goalBlocks)
+    {
+        if(goal.IsGoal(player))
+        {
+            nextScene = std::make_unique<GameClear>();
+        }
+    }
 }

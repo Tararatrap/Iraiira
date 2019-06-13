@@ -1,12 +1,19 @@
-//
-//  Goal.hpp
-//  empty
-//
-//  Created by TomokazuSaito on 2019/06/11.
-//
+#pragma once
+#include "BlockBase.hpp"
+#include "Player.hpp"
 
-#ifndef Goal_h
-#define Goal_h
-
-
-#endif /* Goal_h */
+class Goal : public BlockBase
+{
+    bool goal;
+public:
+    Goal(const RectF& _rect, const String& _assetName)
+    : BlockBase(_rect, _assetName, BlockType::Goal, 0), goal(false)
+    {
+    }
+    
+    
+    bool IsGoal(const Player& player) const
+    {
+        return this->Collision(player);
+    }
+};

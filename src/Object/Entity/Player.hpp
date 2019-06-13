@@ -33,16 +33,18 @@ public:
     }
 
 	int GetHP() const { return hp; }
+    
+    template < class T >
+    void Damage(T& obj)
+    {
+            if(this->Collision(obj)) {
+                hp -= obj.GetAttack();
+            }
+            if(hp <= 0)
+            {
+                living = false;
+                
+            }
+    }
 
-	void Damage(const Array<EnemyShot>& eShot) {
-		for (const auto& s : eShot) {
-			if (Collision(s)) {
-				hp -= s.GetAttack();
-				if (hp <= 0) {
-					living = false;
-					break;
-				}
-			}
-		}
-	}
 };

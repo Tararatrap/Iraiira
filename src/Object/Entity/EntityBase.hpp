@@ -3,21 +3,21 @@
 #include "ObjectBase.hpp"
 
 // 敵、弾、自機の共通オブジェクト
-class EntityBase : public ObjectBase {
+class EntityBase : public ObjectBase
+{
 protected:
 	enum class EntityType {
 		Player,
 		PlayerShot,
-		Enemy,
-		EnemyShot,
+        RotatingBar,
 	};
     
 	bool living;			//生存しているかどうか
 	EntityType type;		//オブジェクトの種類
 
 public:
-	EntityBase(const RectF& _rect, const String& _assetName = U"", EntityType _type = EntityType::Player)
-		: ObjectBase(_rect, _assetName), type(_type), living(true) {}
+    EntityBase(const RectF& _rect, const String& _assetName = U"", EntityType _type = EntityType::Player, int _attack = 100, bool _transparent = false)
+		: ObjectBase(_rect, _assetName, _attack, _transparent), type(_type), living(true) {}
 
 	virtual ~EntityBase() {}
     

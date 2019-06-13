@@ -7,13 +7,15 @@ class BlockBase : public ObjectBase
 protected:
     enum class BlockType {
         Stone,
+        Air,
+        Goal,
     };
     
     BlockType type;
     
 public:
-    BlockBase(const RectF& _rect, const String& _assetName = U"", BlockType _type = BlockType.Stone)
-    : ObjectBaes(_rect, _assetName), type(_type) {}
+    BlockBase(const RectF& _rect = RectF(0, 0, 0, 0), const String& _assetName = U"", BlockType _type = BlockType::Stone, int _attack = 100, bool _transparent = false)
+    : ObjectBase(_rect, _assetName, _attack, _transparent), type(_type) {}
     
     virtual ~BlockBase()
     {
@@ -22,9 +24,9 @@ public:
     virtual void Draw() const override
     {
         if (!assetName.isEmpty()) {
-            TextureAsset(assetName).resize(rect.size).drawAt(rect.pos);
+            TextureAsset(assetName).resized(rect.size).draw(rect.pos);
         }
     }
     
     const BlockType GetBlockType() const { return type; }
-}
+};
