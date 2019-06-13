@@ -1,6 +1,6 @@
 #pragma once
 #include "SceneBase.hpp"
-#include "ObjectBase.hpp"
+#include "EntityBase.hpp"
 #include "Player.hpp"
 #include "PlayerShot.hpp"
 #include "Enemy.hpp"

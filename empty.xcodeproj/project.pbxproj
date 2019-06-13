@@ -88,7 +88,7 @@
 		A28834FB22AE5FD900ACFC81 /* PlayerShot.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PlayerShot.hpp; sourceTree = "<group>"; };
 		A28834FC22AE5FD900ACFC81 /* EnemyShot.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EnemyShot.hpp; sourceTree = "<group>"; };
 		A28834FD22AE5FDA00ACFC81 /* Main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Main.cpp; sourceTree = "<group>"; };
-		A28834FE22AE5FDA00ACFC81 /* ObjectBase.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ObjectBase.hpp; sourceTree = "<group>"; };
+		A28834FE22AE5FDA00ACFC81 /* EntityBase.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = EntityBase.hpp; sourceTree = "<group>"; };
 		A28834FF22AE5FDA00ACFC81 /* SceneBase.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SceneBase.hpp; sourceTree = "<group>"; };
 		A288350022AE5FDA00ACFC81 /* GameClear.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameClear.hpp; sourceTree = "<group>"; };
 		A288350122AE5FDA00ACFC81 /* Title.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Title.hpp; sourceTree = "<group>"; };
@@ -176,7 +176,7 @@
 				A28834F622AE5FD900ACFC81 /* GameOver.cpp */,
 				A288350522AE5FDA00ACFC81 /* GameOver.hpp */,
 				A28834FD22AE5FDA00ACFC81 /* Main.cpp */,
-				A28834FE22AE5FDA00ACFC81 /* ObjectBase.hpp */,
+				A28834FE22AE5FDA00ACFC81 /* EntityBase.hpp */,
 				A288350222AE5FDA00ACFC81 /* Player.hpp */,
 				A28834FB22AE5FD900ACFC81 /* PlayerShot.hpp */,
 				A28834FF22AE5FDA00ACFC81 /* SceneBase.hpp */,
@@ -464,7 +464,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -520,7 +519,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
